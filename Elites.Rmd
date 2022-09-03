@@ -15,7 +15,7 @@ library(janitor)
 ```
 
 ```{r elites}
-elites <- read_excel("Leading Politicians of Russia July 2022.xlsx")
+elites <- read_excel("Leading Politicians of Russia.xlsx")
 
 elites <- elites %>% 
   pivot_longer(!c(Name, Position), names_to = "Month", values_to = "Ranking")

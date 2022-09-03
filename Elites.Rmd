@@ -1,0 +1,25 @@
+---
+title: "Russian Elites"
+author: "Daniel Shapiro"
+date: "9/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(readr)
+library(readxl)
+library(lubridate)
+library(janitor)
+```
+
+```{r elites}
+elites <- read_excel("Leading Politicians of Russia July 2022.xlsx")
+
+elites <- elites %>% 
+  pivot_longer(!c(Name, Position), names_to = "Month", values_to = "Ranking")
+
+elites$Month <- as.numeric(elites$Month)
+elites$Month <- excel_numeric_to_date(elites$Month)
+```

@@ -18,8 +18,27 @@ library(janitor)
 elites <- read_excel("Leading Politicians of Russia.xlsx")
 
 elites <- elites %>% 
-  pivot_longer(!c(Name, Position), names_to = "Month", values_to = "Ranking")
+  pivot_longer(!c(Name, Position, Group), names_to = "Month", values_to = "Ranking")
 
 elites$Month <- as.numeric(elites$Month)
 elites$Month <- excel_numeric_to_date(elites$Month)
+```
+
+```{r wartime}
+wartime <- elites %>%
+  filter(Month >= "2022-01-01")
+
+wartime <- wartime[-c(833:1176), ] %>%
+
+# Removed all people who had never been in the top 100 during this time period.
+
+  mutate_if(is.character, list(~na_if(., "--")))
+
+wartime$Ranking <- as.numeric(wartime$Ranking)
+```
+
+```{r plot1}
+cultural <- wartime %>% filter (Group == "Cultural")
+
+plot1 <- cultural %>% ggplot(aes(x = Month, y = Ranking))
 ```

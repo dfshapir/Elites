@@ -40,5 +40,19 @@ wartime$Ranking <- as.numeric(wartime$Ranking)
 ```{r plot1}
 cultural <- wartime %>% filter (Group == "Cultural")
 
-plot1 <- cultural %>% ggplot(aes(x = Month, y = Ranking))
+plot1 <- cultural %>% ggplot(aes(x = Month, y = Ranking)) +
+  geom_line(aes(color = Name))
+
+plot1
+```
+
+```{r barplot}
+cult_change <- read_excel("Cultural Change.xlsx")
+
+plot2 <- cult_change %>% ggplot(aes(x = Name, y = Change)) +
+  geom_col() +
+  scale_color_manual(values = c("green", "red"),
+                     breaks = c("-1", "0", "1"),
+
+plot2
 ```
